@@ -9,9 +9,28 @@ Automatic Title Extraction: Dynamically extracts the title from IMDb's page head
 Quick Search Button: Adds a small, unobtrusive search box to IMDb pages.
 CircleFTP Compatibility: Directly searches for the extracted title on CircleFTP using the pre-defined search format.
 
-How to Use
+### How to Add the Script to Tampermonkey
 
-Install a userscript manager like Tampermonkey.
-Add this script to your userscript manager.
-Visit any IMDb movie or TV show page.
-Use the "Search on CircleFTP" button to find the title on CircleFTP instantly.
+1. Install Tampermonkey:  
+   - Download and install the Tampermonkey extension for your browser.  
+
+2. Open Tampermonkey Dashboard:  
+   - Click the Tampermonkey icon in your browser's toolbar.  
+   - Select **Dashboard** from the menu.  
+
+3. Create a New Script:  
+   - Click the **"+" (Create a new script)** button in the dashboard.  
+
+4. Paste the Script:  
+   - Delete the default code in the editor.  
+   - Copy your script and paste it into the editor.  
+
+5. Save the Script:  
+   - Press `Ctrl+S` (Windows) or `Cmd+S` (Mac) to save the script.  
+
+6. Test the Script:  
+   - Visit an IMDb movie or TV show page.  
+   - Look for the search button, typically at the bottom-right corner.  
+
+7. Enable or Disable the Script:  
+   - Use the Tampermonkey menu to toggle the script on or off.
