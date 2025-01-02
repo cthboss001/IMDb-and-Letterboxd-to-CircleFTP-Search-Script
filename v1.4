@@ -1,0 +1,88 @@
+// ==UserScript==
+// @name         IMDb and Letterboxd to CircleFTP Search 
+// @namespace    http://new.circleftp.net/
+// @version      1.4
+// @description  Search movies or TV shows from IMDb and Letterboxd on CircleFTP with a single button.
+// @author       cthboss001
+// @match        *://*.imdb.com/title/tt*
+// @match        *://*.letterboxd.com/film/*
+// @grant        GM_openInTab
+// @run-at       document-end
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    // Function to extract title from IMDb
+    function getIMDbTitle() {
+        const titleElement = document.querySelector('h1');
+        return titleElement ? titleElement.textContent.trim() : null;
+    }
+
+    // Function to extract title from Letterboxd
+    function getLetterboxdTitle() {
+        const titleElement = document.querySelector('.headline-1');
+        return titleElement ? titleElement.textContent.trim() : null;
+    }
+
+    // Function to create a search link
+    function createSearchLink(query) {
+        return `http://new.circleftp.net/search?q=${encodeURIComponent(query)}`;
+    }
+
+    // Add the search button
+    function addSearchButton(title) {
+        if (!title) return;
+
+        const searchButton = document.createElement('button');
+        searchButton.textContent = 'Circle';
+        searchButton.style.position = 'fixed';
+        searchButton.style.bottom = '20px';
+        searchButton.style.right = '20px';
+        searchButton.style.padding = '20px 40px';
+        searchButton.style.border = 'none';
+        searchButton.style.background = 'linear-gradient(135deg, #FF8800, #FF5C00)';
+        searchButton.style.color = '#fff';
+        searchButton.style.borderRadius = '30px';
+        searchButton.style.cursor = 'pointer';
+        searchButton.style.fontSize = '16px';
+        searchButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
+        searchButton.style.transition = 'transform 0.3s ease, background 0.3s ease';
+
+        searchButton.addEventListener('mouseover', () => {
+            searchButton.style.background = 'linear-gradient(135deg, #FF6600, #FF3300)';
+            searchButton.style.transform = 'scale(1.1)';
+        });
+
+        searchButton.addEventListener('mouseout', () => {
+            searchButton.style.background = 'linear-gradient(135deg, #FF8800, #FF5C00)';
+            searchButton.style.transform = 'scale(1)';
+        });
+
+        searchButton.addEventListener('click', () => {
+            const searchURL = createSearchLink(title);
+            GM_openInTab(searchURL, { active: true });
+        });
+
+        document.body.appendChild(searchButton);
+    }
+
+    // Initialize the script
+    function init() {
+        let title = null;
+
+        // Detect platform and extract the title
+        if (location.hostname.includes('imdb.com')) {
+            title = getIMDbTitle();
+        } else if (location.hostname.includes('letterboxd.com')) {
+            title = getLetterboxdTitle();
+        }
+
+        if (title) {
+            addSearchButton(title);
+        }
+    }
+
+    // Run the script after the page loads
+    window.addEventListener('load', init);
+})();
